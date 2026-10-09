@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+/* Smooth scrolling for anchor links */
+html {
+  scroll-behavior: smooth;
+}
+body {
+  font-size: 26px;
+}
