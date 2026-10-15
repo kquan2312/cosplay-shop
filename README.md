@@ -2,6 +2,15 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## API URL configuration
+
+API endpoint paths are centralized in `src/config/api.ts`. Set `VITE_API_BASE_URL` to change the API host without editing individual API calls.
+
+- Development uses `.env.development` with an empty base URL. Vite forwards `/products`, `/product-images`, and `/site-setting` to `http://localhost:5506` via the proxy in `vite.config.ts`.
+- For production, copy `.env.production.example` to `.env.production` and replace the example host with the deployed BE base URL, or set `VITE_API_BASE_URL` in the frontend hosting/build environment. The variable must be available when running `npm run build`; Vite embeds it in the built frontend.
+- Set the base URL to the API host only, without a trailing slash. For example, `https://api.example.com` produces requests such as `https://api.example.com/products`.
+- `VITE_*` variables are public in the frontend bundle. Do not put secrets or private credentials in them.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
