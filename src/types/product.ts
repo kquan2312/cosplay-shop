@@ -5,12 +5,19 @@ export interface ProductImage {
   isThumbnail: boolean;
 }
 
+export interface ProductPrices {
+  fes?: string | number | null;
+  testShoot?: string | number | null;
+}
+
+export type ProductPrice = string | number | ProductPrices | null;
+
 export interface Product {
   id: string;
   name: string;
-  type: "COS" | "WIG" | "MAKEUP" | string;
+  type: "COS" | "WIG" | "MAKE" | string;
   ver?: string | null;
-  price?: string | number | null;
+  price?: ProductPrice;
   size?: string | null;
   note?: string | null;
   images?: ProductImage[];

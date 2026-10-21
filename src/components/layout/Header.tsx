@@ -34,7 +34,27 @@ const Header = ({ searchQuery, onSearch }: HeaderProps) => {
  };
 
  return (
-   <header className="sticky top-0 z-50 border-b border-[#F2D7FF] bg-white/90 backdrop-blur-sm">
+<header className="sticky top-0 z-50 border-b border-[#F2D7FF] bg-white/90 backdrop-blur-sm">
+      <div className="border-b border-[#F2D7FF] bg-white/95 px-4 py-2 shadow-sm backdrop-blur-md sm:px-6 lg:hidden">
+  <form onSubmit={handleSubmit} className="mx-auto w-full max-w-7xl">
+    <div className="flex overflow-hidden rounded-full border border-[#E9C8F9] bg-white">
+      <input
+        type="text"
+        value={input}
+        onChange={(event) => setInput(event.target.value)}
+        placeholder="Tìm kiếm sản phẩm..."
+        className="w-full bg-transparent px-4 py-2.5 text-sm text-gray-700 outline-none placeholder:text-gray-400"
+      />
+
+      <button
+        type="submit"
+        className="shrink-0 bg-[#C572DE] px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-[#B363D8]"
+      >
+        Tìm kiếm
+      </button>
+    </div>
+  </form>
+</div>
      <div className="mx-auto flex max-w-7xl flex-col gap-3 px-4 py-3 sm:px-6 lg:h-24 lg:flex-row lg:items-center lg:justify-between lg:gap-4 lg:px-8">
        <div className="flex items-center justify-between gap-3 lg:min-w-0 lg:flex-1">
          <div className="flex min-w-0 items-center gap-3">
@@ -72,7 +92,8 @@ const Header = ({ searchQuery, onSearch }: HeaderProps) => {
          <a className="transition hover:text-[#C572DE]" href="#">Gallery</a>
        </nav>
 
-       <form onSubmit={handleSubmit} className="w-full lg:ml-auto lg:flex lg:w-auto lg:max-w-md lg:flex-1 lg:justify-end">
+       {/* <form onSubmit={handleSubmit} className="w-full lg:ml-auto lg:flex lg:w-auto lg:max-w-md lg:flex-1 lg:justify-end"> */}
+      <form onSubmit={handleSubmit} className="w-full lg:ml-auto lg:flex lg:w-auto lg:max-w-md lg:flex-1 lg:justify-end">
          <div className="flex w-full overflow-hidden rounded-full border border-[#E9C8F9] bg-white shadow-sm lg:max-w-md">
            <input
              type="text"

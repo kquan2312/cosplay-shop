@@ -127,7 +127,7 @@ const Home = () => {
     };
   }, []);
 
-  const loadSectionPage = async (type: "COS" | "WIG" | "MAKEUP", page: number) => {
+  const loadSectionPage = async (type: "COS" | "WIG" | "MAKE", page: number) => {
     try {
       const query = searchQuery.trim();
       const url = API.productsByType(type, query || undefined, page, 12);
@@ -145,7 +145,7 @@ const Home = () => {
           setWigProducts([]);
           setWigMeta({ page: 1, totalPages: 1 });
         }
-        if (type === "MAKEUP") {
+        if (type === "MAKE") {
           setMakeProducts([]);
           setMakeMeta({ page: 1, totalPages: 1 });
         }
@@ -177,7 +177,7 @@ const Home = () => {
         });
       }
 
-      if (type === "MAKEUP") {
+      if (type === "MAKE") {
         setMakeProducts(items);
         setMakeMeta({
           page: currentPage,
@@ -194,7 +194,7 @@ const Home = () => {
         setWigProducts([]);
         setWigMeta({ page: 1, totalPages: 1 });
       }
-      if (type === "MAKEUP") {
+      if (type === "MAKE") {
         setMakeProducts([]);
         setMakeMeta({ page: 1, totalPages: 1 });
       }
@@ -204,7 +204,7 @@ const Home = () => {
   useEffect(() => {
     loadSectionPage("COS", 1);
     loadSectionPage("WIG", 1);
-    loadSectionPage("MAKEUP", 1);
+    loadSectionPage("MAKE", 1);
   }, [searchQuery]);
 
 
@@ -252,7 +252,7 @@ const Home = () => {
     setSearchQuery(trimmed);
   };
 
-  const goToPage = async (type: "COS" | "WIG" | "MAKEUP", nextPage: number) => {
+  const goToPage = async (type: "COS" | "WIG" | "MAKE", nextPage: number) => {
     const currentMeta =
       type === "COS" ? cosMeta : type === "WIG" ? wigMeta : makeMeta;
 
@@ -280,7 +280,7 @@ const scrollToTop = () => {
 };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-gradient-to-b from-pink-50 via-white to-purple-50">
+    <div className="relative min-h-screen overflow-x-clip bg-gradient-to-b from-pink-50 via-white to-purple-50">
       {/* Background glow */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
         <div className="absolute -left-32 top-[10%] h-80 w-80 rounded-full bg-pink-200/30 blur-3xl" />
@@ -389,8 +389,8 @@ const scrollToTop = () => {
           page={makeMeta.page}
           totalPages={makeMeta.totalPages}
           hasMore={makeMeta.page < makeMeta.totalPages}
-          onPrevPage={() => goToPage("MAKEUP", makeMeta.page - 1)}
-          onNextPage={() => goToPage("MAKEUP", makeMeta.page + 1)}
+          onPrevPage={() => goToPage("MAKE", makeMeta.page - 1)}
+          onNextPage={() => goToPage("MAKE", makeMeta.page + 1)}
         />
       </motion.div>
 </div>

@@ -3,13 +3,17 @@ import { showToast } from "../components/ui/Toast";
 import { API, extractPagination, extractProductsList } from "../config/api";
 import { defaultShopSettings, getSiteSettings, saveSiteSettings, type ShopSettings } from "../config/siteSettings";
 import type { Product } from "../types/product";
+import { formatProductPrice, getProductPriceAmount } from "../utils/productPrice";
 
 interface ProductFormState {
   id?: string;
   name: string;
-  type: "COS" | "WIG" | "MAKEUP";
+  type: "COS" | "WIG" | "MAKE";
   ver: string;
-  price: string;
+  price: {
+    fes: string;
+    testShoot: string;
+  };
   size: string;
   note: string;
   file: File | null;
@@ -20,7 +24,10 @@ const emptyForm: ProductFormState = {
   name: "",
   type: "COS",
   ver: "",
-  price: "",
+  price: {
+    fes: "",
+    testShoot: "",
+  },
   size: "",
   note: "",
   file: null,
@@ -137,7 +144,10 @@ const Admin = () => {
       name: product.name ?? "",
       type: (product.type as ProductFormState["type"]) ?? "COS",
       ver: product.ver ?? "",
-      price: product.price == null ? "" : String(product.price),
+      price: {
+        fes: String(getProductPriceAmount(product.price, "fes") ?? ""),
+        testShoot: String(getProductPriceAmount(product.price, "testShoot") ?? ""),
+      },
       size: product.size ?? "",
       note: product.note ?? "",
       file: null,
@@ -159,7 +169,10 @@ const Admin = () => {
         name: form.name.trim(),
         type: form.type,
         ver: form.ver,
-        price: form.price ? Number(form.price) : 0,
+        price: {
+          fes: form.price.fes ? Number(form.price.fes) : 0,
+          testShoot: form.price.testShoot ? Number(form.price.testShoot) : 0,
+        },
         size: form.size,
         note: form.note,
       };
@@ -319,7 +332,8 @@ const Admin = () => {
                       <td className="rounded-l-2xl px-3 py-3 font-medium text-gray-800">{product.name}</td>
                       <td className="px-3 py-3">{product.type}</td>
                       <td className="px-3 py-3">
-                        {product.price ? `${Number(product.price).toLocaleString("vi-VN")}đ` : "0đ"}
+                        <div>FES: {formatProductPrice(getProductPriceAmount(product.price, "fes"))}</div>
+                        <div>Test/Shoot: {formatProductPrice(getProductPriceAmount(product.price, "testShoot"))}</div>
                       </td>
                       <td className="px-3 py-3">{product.size || "-"}</td>
                       <td className="max-w-xs px-3 py-3 text-gray-600">{product.note || "-"}</td>
@@ -486,16 +500,27 @@ const Admin = () => {
                   >
                     <option value="COS">COS</option>
                     <option value="WIG">WIG</option>
-                    <option value="MAKEUP">MAKEUP</option>
+                    <option value="MAKE">MAKE</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="mb-1 block text-sm font-medium text-gray-700">Giá</label>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Giá FES</label>
                   <input
                     type="number"
-                    value={form.price}
-                    onChange={(event) => setForm((prev) => ({ ...prev, price: event.target.value }))}
+                    value={form.price.fes}
+                    onChange={(event) => setForm((prev) => ({ ...prev, price: { ...prev.price, fes: event.target.value } }))}
+                    className="w-full rounded-xl border border-gray-200 px-3 py-2.5 outline-none focus:border-pink-500"
+                    min="0"
+                  />
+                </div>
+
+                <div>
+                  <label className="mb-1 block text-sm font-medium text-gray-700">Giá Test/Shoot</label>
+                  <input
+                    type="number"
+                    value={form.price.testShoot}
+                    onChange={(event) => setForm((prev) => ({ ...prev, price: { ...prev.price, testShoot: event.target.value } }))}
                     className="w-full rounded-xl border border-gray-200 px-3 py-2.5 outline-none focus:border-pink-500"
                     min="0"
                   />

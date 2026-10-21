@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { API } from "../config/api";
 import type { Product } from "../types/product";
+import { formatProductPrice, getProductPriceAmount } from "../utils/productPrice";
 
 interface ProductDetailProps {
   productId: string;
@@ -104,7 +105,8 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
     );
   }
 
-  const price = Number(product.price ?? 0);
+  const fesPrice = getProductPriceAmount(product.price, "fes");
+  const testShootPrice = getProductPriceAmount(product.price, "testShoot");
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800">
@@ -187,8 +189,15 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                 <span className="rounded-full bg-gray-100 px-3 py-1">{product.ver || "Ver: -"}</span>
               </div>
 
-              <div className="mt-6 text-3xl font-bold text-pink-600">
-                {Number.isFinite(price) ? price.toLocaleString("vi-VN") : "0"}đ
+              <div className="mt-6 grid gap-3 sm:grid-cols-2">
+                <div className="rounded-2xl bg-pink-50 p-4">
+                  <p className="text-sm font-semibold text-gray-500">Giá FES</p>
+                  <p className="mt-1 text-2xl font-bold text-pink-600">{formatProductPrice(fesPrice)}</p>
+                </div>
+                <div className="rounded-2xl bg-purple-50 p-4">
+                  <p className="text-sm font-semibold text-gray-500">Giá Test/Shoot</p>
+                  <p className="mt-1 text-2xl font-bold text-purple-600">{formatProductPrice(testShootPrice)}</p>
+                </div>
               </div>
 
               <p className="mt-6 text-base leading-7 text-gray-600">

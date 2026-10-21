@@ -1,3 +1,5 @@
+
+import bannerMewiie from "../../assets/images/banner_mewiie.jpg";
 const Hero = () => {
   return (
     <section className="bg-[#FFF7FE]">
@@ -25,10 +27,14 @@ const Hero = () => {
         </div>
 
         <div className="order-1 flex justify-center lg:order-2 lg:justify-end">
-          <div className="flex h-[260px] w-full max-w-[420px] items-center justify-center rounded-[30px] bg-[#F2D7FF] text-2xl font-bold text-[#A04BC9] shadow-[0_20px_50px_rgba(197,114,222,0.15)] sm:h-[340px] sm:rounded-[40px] lg:h-[650px] lg:w-[500px] lg:rounded-[50px] lg:text-3xl">
-            IMAGE
-          </div>
-        </div>
+  <div className="relative flex h-[260px] w-full max-w-[420px] items-center justify-center overflow-hidden rounded-[30px] bg-gradient-to-br from-[#FCEBFF] via-[#F7E5FC] to-[#EED5FA] p-3 shadow-[0_20px_50px_rgba(197,114,222,0.18)] sm:h-[340px] sm:rounded-[40px] sm:p-4 lg:h-[600px] lg:w-[500px] lg:rounded-[50px] lg:p-5">
+    <img
+      src={bannerMewiie}
+      alt="Mewiie Banner"
+      className="h-full w-full rounded-[22px] object-contain sm:rounded-[30px] lg:rounded-[38px]"
+    />
+  </div>
+</div>
       </div>
     </section>
   );

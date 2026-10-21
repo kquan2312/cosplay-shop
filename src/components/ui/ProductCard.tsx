@@ -1,18 +1,5 @@
-interface ProductImage {
-  url: string;
-  isThumbnail: boolean;
-}
-
-interface Product {
-  id: string;
-  name: string;
-  type: string;
-  ver?: string | null;
-  price?: string | number | null;
-  size?: string | null;
-  note?: string | null;
-  images?: ProductImage[];
-}
+import type { Product } from "../../types/product";
+import { formatProductPrice, getProductPriceAmount } from "../../utils/productPrice";
 
 interface ProductCardProps {
   product: Product;
@@ -21,7 +8,8 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
   const images = product.images ?? [];
   const thumbnail = images.find((img) => img.isThumbnail)?.url || images[0]?.url || "";
-  const numericPrice = Number(product.price ?? 0);
+  const fesPrice = getProductPriceAmount(product.price, "fes");
+  const testShootPrice = getProductPriceAmount(product.price, "testShoot");
 
   const handleOpenDetail = () => {
     const nextUrl = `/product/${product.id}`;
@@ -56,12 +44,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <p className="line-clamp-2 text-sm text-gray-400">{product.note || "-"}</p>
 
-        <div className="flex items-center justify-between pt-3">
-          <span className="text-xl font-bold text-[#A04BC9]">
-            {Number.isFinite(numericPrice) ? numericPrice.toLocaleString("vi-VN") : "0"}
-            đ
-          </span>
-
+        <div className="flex items-end justify-between gap-3 pt-3">
+          <div className="space-y-1 text-sm">
+            <p className="font-bold text-[#A04BC9]">
+              FES: {formatProductPrice(fesPrice)}
+            </p>
+            <p className="font-semibold text-gray-600">
+              Test/Shoot: {formatProductPrice(testShootPrice)}
+            </p>
+          </div>
           <button
             type="button"
             onClick={handleOpenDetail}
