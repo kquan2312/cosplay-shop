@@ -114,7 +114,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
     `Giá FES: ${formatProductPrice(fesPrice)}`,
     `Giá Test/Shoot: ${formatProductPrice(testShootPrice)}`,
   ].join("\n");
-  const contactHref = `https://www.facebook.com/anhh.anhh.843493#${encodeURIComponent(contactMessage)}`;
+  const contactHref = `https://m.me/anhh.anhh.843493?text=${encodeURIComponent(contactMessage)}`;
 
   return (
     <div className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800">
