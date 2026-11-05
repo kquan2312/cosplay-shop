@@ -5,5 +5,14 @@ html {
   scroll-behavior: smooth;
 }
 body {
-  font-size: 26px;
+  margin: 0;
+  min-width: 320px;
+  overflow-x: hidden;
+  font-size: 16px;
+}
+
+button,
+a,
+input {
+  -webkit-tap-highlight-color: transparent;
 }

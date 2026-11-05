@@ -7,18 +7,18 @@ import {
 
 const Statistics = () => {
   return (
-    <section className="-mt-16 relative z-20">
-      <div className="mx-auto max-w-7xl px-8">
+    <section className="relative z-20 -mt-10 sm:-mt-16">
+      <div className="mx-auto max-w-7xl px-3 sm:px-8">
 
-        <div className="grid gap-6 rounded-3xl bg-white p-8 shadow-xl md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-4 rounded-3xl bg-white p-4 shadow-xl sm:gap-6 sm:p-8 md:grid-cols-2 lg:grid-cols-4">
 
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl bg-pink-100 p-4">
-              <Users className="text-pink-500" size={32} />
+            <div className="rounded-2xl bg-pink-100 p-3 sm:p-4">
+              <Users className="text-pink-500" size={26} />
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">300+</h2>
+              <h2 className="text-2xl font-bold sm:text-3xl">300+</h2>
               <p className="text-gray-500">
                 Happy Clients
               </p>
@@ -26,12 +26,12 @@ const Statistics = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl bg-pink-100 p-4">
-              <Shirt className="text-pink-500" size={32} />
+            <div className="rounded-2xl bg-pink-100 p-3 sm:p-4">
+              <Shirt className="text-pink-500" size={26} />
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">60+</h2>
+              <h2 className="text-2xl font-bold sm:text-3xl">60+</h2>
               <p className="text-gray-500">
                 Costumes
               </p>
@@ -39,12 +39,12 @@ const Statistics = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl bg-pink-100 p-4">
-              <Sparkles className="text-pink-500" size={32} />
+            <div className="rounded-2xl bg-pink-100 p-3 sm:p-4">
+              <Sparkles className="text-pink-500" size={26} />
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">80+</h2>
+              <h2 className="text-2xl font-bold sm:text-3xl">80+</h2>
               <p className="text-gray-500">
                 Wig Styling
               </p>
@@ -52,12 +52,12 @@ const Statistics = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <div className="rounded-2xl bg-pink-100 p-4">
-              <Trophy className="text-pink-500" size={32} />
+            <div className="rounded-2xl bg-pink-100 p-3 sm:p-4">
+              <Trophy className="text-pink-500" size={26} />
             </div>
 
             <div>
-              <h2 className="text-3xl font-bold">5 Years</h2>
+              <h2 className="text-2xl font-bold sm:text-3xl">5 Years</h2>
               <p className="text-gray-500">
                 Experience
               </p>

@@ -117,7 +117,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
   const contactHref = `https://www.messenger.com/t/100029457714109/?text=${encodeURIComponent(contactMessage)}`;
 
   return (
-    <div className="min-h-screen bg-gray-50 px-6 py-10 text-gray-800">
+    <div className="min-h-screen bg-gray-50 px-3 py-6 text-gray-800 sm:px-6 sm:py-10">
       <div className="mx-auto max-w-6xl">
         <button
           type="button"
@@ -150,14 +150,14 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
           </div>
         )}
 
-        <div className="rounded-[32px] bg-white p-6 shadow-sm ring-1 ring-gray-200 md:p-10">
+        <div className="rounded-3xl bg-white p-4 shadow-sm ring-1 ring-gray-200 sm:rounded-[32px] sm:p-6 md:p-10">
           <div className="grid gap-8 lg:grid-cols-[1.15fr,0.85fr]">
             <div>
               <div className="overflow-hidden rounded-3xl bg-gray-100">
                 {mainImage ? (
-                  <img src={mainImage} alt={product.name} className="h-[540px] w-full object-contain p-3" />
+                <img src={mainImage} alt={product.name} className="h-[300px] w-full object-contain p-3 sm:h-[420px] lg:h-[540px]" />
                 ) : (
-                  <div className="flex h-[540px] items-center justify-center text-gray-400">No image</div>
+                  <div className="flex h-[300px] items-center justify-center text-gray-400 sm:h-[420px] lg:h-[540px]">No image</div>
                 )}
               </div>
 
@@ -190,7 +190,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                 {product.type}
               </span>
 
-              <h1 className="text-4xl font-extrabold leading-tight">{product.name}</h1>
+              <h1 className="text-3xl font-extrabold leading-tight sm:text-4xl">{product.name}</h1>
 
               <div className="mt-4 flex items-center gap-3 text-sm text-gray-500">
                 <span className="rounded-full bg-gray-100 px-3 py-1">{product.size || "Size: -"}</span>
@@ -198,13 +198,13 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
               </div>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-2">
-                <div className="rounded-2xl bg-pink-50 p-4">
+                <div className="rounded-2xl bg-pink-50 p-3 sm:p-4">
                   <p className="text-sm font-semibold text-gray-500">Giá FES</p>
-                  <p className="mt-1 text-2xl font-bold text-pink-600">{formatProductPrice(fesPrice)}</p>
+                  <p className="mt-1 text-xl font-bold text-pink-600 sm:text-2xl">{formatProductPrice(fesPrice)}</p>
                 </div>
-                <div className="rounded-2xl bg-purple-50 p-4">
+                <div className="rounded-2xl bg-purple-50 p-3 sm:p-4">
                   <p className="text-sm font-semibold text-gray-500">Giá Test/Shoot</p>
-                  <p className="mt-1 text-2xl font-bold text-purple-600">{formatProductPrice(testShootPrice)}</p>
+                  <p className="mt-1 text-xl font-bold text-purple-600 sm:text-2xl">{formatProductPrice(testShootPrice)}</p>
                 </div>
               </div>
 
@@ -216,7 +216,7 @@ const ProductDetail = ({ productId }: ProductDetailProps) => {
                 href={contactHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-8 inline-flex w-fit rounded-full bg-pink-500 px-6 py-3 font-semibold text-white transition hover:bg-pink-600"
+                className="mt-8 inline-flex w-full justify-center rounded-full bg-pink-500 px-6 py-3 font-semibold text-white transition hover:bg-pink-600 sm:w-fit"
               >
                 Liên hệ thuê
               </a>

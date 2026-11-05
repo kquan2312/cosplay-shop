@@ -27,9 +27,9 @@ const ProductSection = ({
   return (
     <section
       id={id}
-      className="relative py-20"
+      className="relative py-12 sm:py-20"
     >
-      <div className="mx-auto max-w-7xl px-6 md:px-8">
+      <div className="mx-auto max-w-7xl px-3 sm:px-6 md:px-8">
         <SectionTitle title={title} />
 
         {products.length > 0 && (
@@ -38,7 +38,7 @@ const ProductSection = ({
           </div>
         )}
 
-        <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-2 lg:grid-cols-4 lg:gap-7">
+        <div className="mt-7 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-5 lg:grid-cols-4 lg:gap-7">
           {products.map((product, index) => (
             <motion.div
               key={product.id}
