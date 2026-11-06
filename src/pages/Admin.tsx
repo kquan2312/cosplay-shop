@@ -259,7 +259,7 @@ const Admin = () => {
     }`;
 
   return (
-    <div className="min-h-screen bg-gray-50 px-4 py-8 text-gray-800 md:px-6">
+    <div className="min-h-screen overflow-x-hidden bg-gray-50 px-3 py-5 text-gray-800 sm:px-4 sm:py-8 md:px-6">
       <div className="mx-auto max-w-6xl">
         <div className="mb-6 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
@@ -267,7 +267,7 @@ const Admin = () => {
             <h1 className="mt-2 text-3xl font-bold md:text-4xl">Quản lý website</h1>
           </div>
 
-          <div className="flex items-center gap-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3">
             <a href="/" className="rounded-full border border-pink-500 px-4 py-2 text-sm font-semibold text-pink-600 hover:bg-pink-500 hover:text-white">
               Về trang chủ
             </a>
@@ -463,10 +463,10 @@ const Admin = () => {
       </div>
 
       {formOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-          <div className="w-full max-w-xl rounded-3xl bg-white p-5 shadow-2xl md:p-6">
-            <div className="mb-5 flex items-center justify-between">
-              <h2 className="text-2xl font-bold">{editingId ? "Sửa sản phẩm" : "Thêm sản phẩm"}</h2>
+        <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/40 p-2 sm:items-center sm:p-4">
+          <div className="my-2 max-h-[calc(100dvh-1rem)] w-full max-w-xl overflow-y-auto rounded-3xl bg-white p-4 shadow-2xl sm:my-0 sm:max-h-[calc(100dvh-2rem)] sm:p-6">
+            <div className="mb-4 flex items-center justify-between gap-3 sm:mb-5">
+              <h2 className="text-xl font-bold sm:text-2xl">{editingId ? "Sửa sản phẩm" : "Thêm sản phẩm"}</h2>
               <button
                 type="button"
                 onClick={() => {
@@ -479,7 +479,7 @@ const Admin = () => {
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form onSubmit={handleSubmit} className="space-y-4 pb-1">
               <div>
                 <label className="mb-1 block text-sm font-medium text-gray-700">Tên sản phẩm</label>
                 <input
@@ -579,21 +579,21 @@ const Admin = () => {
                 <p className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-600">{error}</p>
               )}
 
-              <div className="flex justify-end gap-3 pt-2">
+              <div className="flex flex-col-reverse gap-2 pt-2 sm:flex-row sm:justify-end sm:gap-3">
                 <button
                   type="button"
                   onClick={() => {
                     setFormOpen(false);
                     resetForm();
                   }}
-                  className="rounded-full border border-gray-300 px-5 py-2.5 font-semibold text-gray-700"
+                  className="w-full rounded-full border border-gray-300 px-5 py-2.5 font-semibold text-gray-700 sm:w-auto"
                 >
                   Hủy
                 </button>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="rounded-full bg-pink-500 px-5 py-2.5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70"
+                  className="w-full rounded-full bg-pink-500 px-5 py-2.5 font-semibold text-white disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
                 >
                   {loading ? "Đang xử lý..." : editingId ? "Lưu" : "Tạo mới"}
                 </button>
