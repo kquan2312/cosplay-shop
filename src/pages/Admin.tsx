@@ -178,7 +178,7 @@ const Admin = () => {
       };
 
       const url = editingId ? `${API.products}/${editingId}` : API.products;
-      const method = editingId ? "PUT" : "POST";
+      const method = editingId ? "PATCH" : "POST";
 
       const res = await fetch(url, {
         method,
