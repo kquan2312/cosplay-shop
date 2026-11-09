@@ -48,6 +48,7 @@ const Admin = () => {
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [deletingImageId, setDeletingImageId] = useState<string | null>(null);
+  const [imagePendingDelete, setImagePendingDelete] = useState<ProductImage | null>(null);
 
   const loadProducts = async () => {
     try {
@@ -130,7 +131,6 @@ const Admin = () => {
 
   const handleDeleteImage = async (image: ProductImage) => {
     if (!image.id) return;
-    if (!window.confirm("Bạn có chắc muốn xóa ảnh này không?")) return;
 
     setDeletingImageId(image.id);
     setError(null);
@@ -152,6 +152,7 @@ const Admin = () => {
       showToast(message, "error");
     } finally {
       setDeletingImageId(null);
+      setImagePendingDelete(null);
     }
   };
 
@@ -623,7 +624,7 @@ const Admin = () => {
                           {image.id && (
                             <button
                               type="button"
-                              onClick={() => handleDeleteImage(image)}
+                              onClick={() => setImagePendingDelete(image)}
                               disabled={deletingImageId === image.id}
                               className="absolute right-1 top-1 rounded-full bg-red-500 px-2 py-1 text-[10px] font-semibold text-white shadow-sm transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60"
                               aria-label={`Xóa ảnh ${index + 1}`}
@@ -671,6 +672,50 @@ const Admin = () => {
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {imagePendingDelete && (
+        <div className="fixed inset-0 z-[60] flex items-center justify-center bg-black/50 p-4">
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-image-title"
+            className="w-full max-w-sm rounded-3xl bg-white p-5 shadow-2xl sm:p-6"
+          >
+            <div className="flex items-start gap-3">
+              <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-red-100 text-lg text-red-600">
+                !
+              </div>
+              <div className="min-w-0">
+                <h2 id="delete-image-title" className="text-lg font-bold text-gray-900">
+                  Xóa ảnh này?
+                </h2>
+                <p className="mt-1 text-sm leading-6 text-gray-600">
+                  Ảnh sẽ bị xóa khỏi sản phẩm và không thể khôi phục.
+                </p>
+              </div>
+            </div>
+
+            <div className="mt-5 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end">
+              <button
+                type="button"
+                onClick={() => setImagePendingDelete(null)}
+                disabled={deletingImageId !== null}
+                className="w-full rounded-full border border-gray-300 px-5 py-2.5 font-semibold text-gray-700 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              >
+                Hủy
+              </button>
+              <button
+                type="button"
+                onClick={() => handleDeleteImage(imagePendingDelete)}
+                disabled={deletingImageId !== null}
+                className="w-full rounded-full bg-red-500 px-5 py-2.5 font-semibold text-white transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+              >
+                {deletingImageId !== null ? "Đang xóa..." : "Xóa ảnh"}
+              </button>
+            </div>
           </div>
         </div>
       )}
