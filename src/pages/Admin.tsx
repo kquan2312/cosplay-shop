@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { showToast } from "../components/ui/Toast";
 import { API, extractPagination, extractProductsList } from "../config/api";
 import { defaultShopSettings, getSiteSettings, saveSiteSettings, type ShopSettings } from "../config/siteSettings";
-import type { Product } from "../types/product";
+import type { Product, ProductImage } from "../types/product";
 import { formatProductPrice, getProductPriceAmount } from "../utils/productPrice";
 
 interface ProductFormState {
@@ -18,6 +18,7 @@ interface ProductFormState {
   note: string;
   file: File | null;
   isThumbnail: boolean;
+  existingImages: ProductImage[];
 }
 
 const emptyForm: ProductFormState = {
@@ -32,6 +33,7 @@ const emptyForm: ProductFormState = {
   note: "",
   file: null,
   isThumbnail: true,
+  existingImages: [],
 };
 
 const Admin = () => {
@@ -137,21 +139,33 @@ const Admin = () => {
     setFormOpen(true);
   };
 
-  const openEditForm = (product: Product) => {
+  const openEditForm = async (product: Product) => {
+    let detail = product;
+
+    try {
+      const res = await fetch(API.productById(product.id));
+      if (res.ok) {
+        detail = (await res.json()) as Product;
+      }
+    } catch (err) {
+      console.warn("Could not load product detail for editing", err);
+    }
+
     setEditingId(product.id);
     setForm({
-      id: product.id,
-      name: product.name ?? "",
-      type: (product.type as ProductFormState["type"]) ?? "COS",
-      ver: product.ver ?? "",
+      id: detail.id,
+      name: detail.name ?? "",
+      type: (detail.type as ProductFormState["type"]) ?? "COS",
+      ver: detail.ver ?? "",
       price: {
-        fes: String(getProductPriceAmount(product.price, "fes") ?? ""),
-        testShoot: String(getProductPriceAmount(product.price, "testShoot") ?? ""),
+        fes: String(getProductPriceAmount(detail.price, "fes") ?? ""),
+        testShoot: String(getProductPriceAmount(detail.price, "testShoot") ?? ""),
       },
-      size: product.size ?? "",
-      note: product.note ?? "",
+      size: detail.size ?? "",
+      note: detail.note ?? "",
       file: null,
       isThumbnail: true,
+      existingImages: detail.images ?? [],
     });
     setError(null);
     setSuccess(null);
@@ -564,6 +578,25 @@ const Admin = () => {
                   onChange={(event) => setForm((prev) => ({ ...prev, file: event.target.files?.[0] ?? null }))}
                   className="w-full rounded-xl border border-dashed border-gray-200 p-2 text-sm"
                 />
+                {form.existingImages.length > 0 && (
+                  <div className="mt-3 rounded-2xl border border-gray-200 bg-gray-50 p-3">
+                    <p className="mb-2 text-sm font-semibold text-gray-700">
+                      Ảnh đang có ({form.existingImages.length})
+                    </p>
+                    <div className="grid grid-cols-3 gap-2 sm:grid-cols-4">
+                      {form.existingImages.map((image, index) => (
+                        <div key={`${image.id ?? image.url}-${index}`} className="relative overflow-hidden rounded-xl border border-gray-200 bg-white">
+                          <img src={image.url} alt={`${form.name} ${index + 1}`} className="aspect-square h-full w-full object-cover" />
+                          {image.isThumbnail && (
+                            <span className="absolute bottom-1 left-1 rounded-full bg-pink-500 px-2 py-0.5 text-[10px] font-semibold text-white">
+                              Thumbnail
+                            </span>
+                          )}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               <label className="flex items-center gap-2 text-sm text-gray-700">
