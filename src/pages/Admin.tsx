@@ -47,6 +47,7 @@ const Admin = () => {
   const [settingsForm, setSettingsForm] = useState<ShopSettings>(defaultShopSettings);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [deletingImageId, setDeletingImageId] = useState<string | null>(null);
 
   const loadProducts = async () => {
     try {
@@ -124,6 +125,33 @@ const Admin = () => {
     if (!res.ok) {
       const text = await res.text().catch(() => "");
       throw new Error(`Upload ảnh thất bại: ${text || res.status}`);
+    }
+  };
+
+  const handleDeleteImage = async (image: ProductImage) => {
+    if (!image.id) return;
+    if (!window.confirm("Bạn có chắc muốn xóa ảnh này không?")) return;
+
+    setDeletingImageId(image.id);
+    setError(null);
+
+    try {
+      const res = await fetch(`${API.productImages}/${image.id}`, { method: "DELETE" });
+      if (!res.ok && res.status !== 204) {
+        throw new Error(`Xóa ảnh thất bại: ${res.status}`);
+      }
+
+      setForm((prev) => ({
+        ...prev,
+        existingImages: prev.existingImages.filter((item) => item.id !== image.id),
+      }));
+      showToast("Xóa ảnh thành công.", "success");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Không thể xóa ảnh.";
+      setError(message);
+      showToast(message, "error");
+    } finally {
+      setDeletingImageId(null);
     }
   };
 
@@ -591,6 +619,17 @@ const Admin = () => {
                             <span className="absolute bottom-1 left-1 rounded-full bg-pink-500 px-2 py-0.5 text-[10px] font-semibold text-white">
                               Thumbnail
                             </span>
+                          )}
+                          {image.id && (
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteImage(image)}
+                              disabled={deletingImageId === image.id}
+                              className="absolute right-1 top-1 rounded-full bg-red-500 px-2 py-1 text-[10px] font-semibold text-white shadow-sm transition hover:bg-red-600 disabled:cursor-not-allowed disabled:opacity-60"
+                              aria-label={`Xóa ảnh ${index + 1}`}
+                            >
+                              {deletingImageId === image.id ? "..." : "Xóa"}
+                            </button>
                           )}
                         </div>
                       ))}
